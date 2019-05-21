@@ -37,8 +37,9 @@ class Model(object):
             30000, 0.96, staircase=True), name='lambda')
 
         # learning rate decay
-        alpha = tf.maximum(0.01, tf.train.exponential_decay(0.1, self.global_step, \
-            40000, 0.96, staircase=True), name='alpha')
+        #alpha = tf.maximum(0.01, tf.train.exponential_decay(0.1, self.global_step, \
+        #    40000, 0.96, staircase=True), name='alpha')
+        alpha = tf.constant(0.67)
 
         tf.summary.scalar('lambda', lamda)
         tf.summary.scalar('alpha', alpha)
@@ -129,8 +130,18 @@ class Model(object):
                     trace_op = trace.assign((lamda * trace) + grad)
                     tf.summary.histogram(var.name + '/traces', trace)
 
+                #Mihatsch scalar transformation function
+                #if x > 0:
+                #    x = (1 - k) * x;
+                #else:
+                #    x = (1 + k) * x;
+                k = 0.5
+                r = tf.cond(tf.greater(delta_op, 0), lambda: (1 - k) * delta_op, lambda: (1 + k) * delta_op)
+                
                 # grad with trace = alpha * delta * e
-                grad_trace = alpha * delta_op * trace_op
+                grad_trace = alpha * r * trace_op
+
+                # ORIGINAL: grad_trace = alpha * delta_op * trace_op
                 tf.summary.histogram(var.name + '/gradients/trace', grad_trace)
 
                 grad_apply = var.assign_add(grad_trace)
@@ -199,15 +210,18 @@ class Model(object):
         # the agent plays against itself, making the best move for each player
         players = [TDAgent(Game.TOKENS[0], self), TDAgent(Game.TOKENS[1], self)]
 
-        validation_interval = 1000
-        episodes = 5000
+        #validation_interval = 1000
+        #episodes = 5000
+        validation_interval = 100
+        episodes = 1000
 
         train_start_ts = time.time()
         for episode in range(episodes):
             start_ts = time.time()
-            if episode != 0 and episode % validation_interval == 0:
+            #if episode != 0 and episode % validation_interval == 0:
+                #self.test(episodes=100)
+            if episode == 300:
                 self.test(episodes=100)
-
             game = Game.new()
             player_num = random.randint(0, 1)
 
@@ -243,4 +257,4 @@ class Model(object):
 
         summary_writer.close()
 
-        self.test(episodes=1000)
+        self.test(episodes=100)
