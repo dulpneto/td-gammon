@@ -22,3 +22,8 @@ To play against a trained model: `python main.py --play --restore`
 - Try different activation functions on the hidden layer.
 - Expand the board representation. Currently it uses the "compact" representation from the paper. A full board representation should remove some ambiguity between board states.
 - Increase the number of turns the agent will look at before making a move. The paper used a 2-ply and 3-ply search while this implementation only uses 1-ply.
+
+
+conda create -n tfenv anaconda python=3.5
+activate tfenv
+pip install tensorflow==1.13.1

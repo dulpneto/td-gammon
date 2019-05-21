@@ -33,6 +33,7 @@ class Model(object):
         self.global_step = tf.Variable(0, trainable=False, name='global_step')
 
         print("Executing with k: ", k)
+        write('Executing with k: %d' % k)
 
         # lambda decay
         lamda = tf.maximum(0.7, tf.train.exponential_decay(0.9, self.global_step, \
@@ -198,12 +199,12 @@ class Model(object):
             winners[winner] += 1
 
             winners_total = sum(winners)
-            """print("[Episode %d] %s (%s) vs %s (%s) %d:%d of %d games (%.2f%%)" % (episode, \
+            print("[Episode %d] %s (%s) vs %s (%s) %d:%d of %d games (%.2f%%)" % (episode, \
                 players[0].name, players[0].player, \
                 players[1].name, players[1].player, \
                 winners[0], winners[1], winners_total, \
-                (winners[0] / winners_total) * 100.0))"""
-            print("%d:%d of %d games (%.2f%%)" % (\
+                (winners[0] / winners_total) * 100.0))
+        write("%d:%d of %d games (%.2f%%)" % (\
                 winners[0], winners[1], winners_total, \
                 (winners[0] / winners_total) * 100.0))
 
@@ -224,6 +225,7 @@ class Model(object):
             start_ts = time.time()
             if episode != 0 and episode % validation_interval == 0:
                 print('Episode:', episode)
+                write('Episode %d:' % episode)
                 self.test(episodes=1000)
             game = Game.new()
             player_num = random.randint(0, 1)
@@ -262,3 +264,8 @@ class Model(object):
         summary_writer.close()
 
         self.test(episodes=1000)
+
+def write(message):
+    f= open("resultado.txt","w+")
+    f.write(message)
+    f.close() 
