@@ -255,8 +255,8 @@ class Model(object):
             summary_writer.add_summary(summaries, global_step=global_step)
 
             end_ts = time.time()
-            """print("Game %d/%d (Winner: %s) in %d turns (%.2f secs)" % (episode, episodes, players[winner].player, game_step, end_ts-start_ts))
-            if episode in [9, 99, 999, 9999, 99999]:
+            print("Game %d/%d (Winner: %s) in %d turns (%.2f secs)" % (episode, episodes, players[winner].player, game_step, end_ts-start_ts))
+            """if episode in [9, 99, 999, 9999, 99999]:
                 print("%d games avg time: %.2f secs" % (episode+1, (end_ts - train_start_ts) / (episode+1)))
             """
             self.saver.save(self.sess, self.checkpoint_path + 'checkpoint', global_step=global_step)
