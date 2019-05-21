@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+python main.py --k=-0.8 > resultados/resultado_m_0_8.txt
+python main.py --k=-0.5 > resultados/resultado_m_0_5.txt
+python main.py --k=0.0 > resultados/resultado_0_0.txt
+python main.py --k=0.5 > resultados/resultado_0_5.txt
+python main.py --k=0.8 > resultados/resultado_0_8.txt

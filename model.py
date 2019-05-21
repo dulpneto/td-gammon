@@ -23,7 +23,7 @@ def dense_layer(x, shape, activation, name):
         return activation(tf.matmul(x, W) + b, name='activation')
 
 class Model(object):
-    def __init__(self, sess, model_path, summary_path, checkpoint_path, restore=False):
+    def __init__(self, sess, model_path, summary_path, checkpoint_path, restore=False, k=0):
         self.model_path = model_path
         self.summary_path = summary_path
         self.checkpoint_path = checkpoint_path
@@ -31,6 +31,8 @@ class Model(object):
         # setup our session
         self.sess = sess
         self.global_step = tf.Variable(0, trainable=False, name='global_step')
+
+        print("Executing with k: ", k)
 
         # lambda decay
         lamda = tf.maximum(0.7, tf.train.exponential_decay(0.9, self.global_step, \
@@ -135,7 +137,6 @@ class Model(object):
                 #    x = (1 - k) * x;
                 #else:
                 #    x = (1 + k) * x;
-                k = 0.5
                 r = tf.cond(tf.greater(delta_op, 0), lambda: (1 - k) * delta_op, lambda: (1 + k) * delta_op)
                 
                 # grad with trace = alpha * delta * e
@@ -197,9 +198,12 @@ class Model(object):
             winners[winner] += 1
 
             winners_total = sum(winners)
-            print("[Episode %d] %s (%s) vs %s (%s) %d:%d of %d games (%.2f%%)" % (episode, \
+            """print("[Episode %d] %s (%s) vs %s (%s) %d:%d of %d games (%.2f%%)" % (episode, \
                 players[0].name, players[0].player, \
                 players[1].name, players[1].player, \
+                winners[0], winners[1], winners_total, \
+                (winners[0] / winners_total) * 100.0))"""
+            print("%d:%d of %d games (%.2f%%)" % (\
                 winners[0], winners[1], winners_total, \
                 (winners[0] / winners_total) * 100.0))
 
@@ -218,10 +222,9 @@ class Model(object):
         train_start_ts = time.time()
         for episode in range(episodes):
             start_ts = time.time()
-            #if episode != 0 and episode % validation_interval == 0:
-                #self.test(episodes=100)
-            if episode == 300:
-                self.test(episodes=100)
+            if episode != 0 and episode % validation_interval == 0:
+                print('Episode:', episode)
+                self.test(episodes=1000)
             game = Game.new()
             player_num = random.randint(0, 1)
 
@@ -250,11 +253,12 @@ class Model(object):
             summary_writer.add_summary(summaries, global_step=global_step)
 
             end_ts = time.time()
-            print("Game %d/%d (Winner: %s) in %d turns (%.2f secs)" % (episode, episodes, players[winner].player, game_step, end_ts-start_ts))
+            """print("Game %d/%d (Winner: %s) in %d turns (%.2f secs)" % (episode, episodes, players[winner].player, game_step, end_ts-start_ts))
             if episode in [9, 99, 999, 9999, 99999]:
                 print("%d games avg time: %.2f secs" % (episode+1, (end_ts - train_start_ts) / (episode+1)))
+            """
             self.saver.save(self.sess, self.checkpoint_path + 'checkpoint', global_step=global_step)
 
         summary_writer.close()
 
-        self.test(episodes=100)
+        self.test(episodes=1000)
