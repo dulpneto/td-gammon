@@ -268,4 +268,5 @@ class Model(object):
 def write(message):
     f= open("resultado.txt","w+")
     f.write(message)
+    f.write("\n")
     f.close() 
