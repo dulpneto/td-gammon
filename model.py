@@ -33,7 +33,7 @@ class Model(object):
         self.global_step = tf.Variable(0, trainable=False, name='global_step')
 
         print("Executing with k: ", k)
-        write('Executing with k: %d' % k)
+        write('Executing with k: %.2f%%' % k)
 
         # lambda decay
         lamda = tf.maximum(0.7, tf.train.exponential_decay(0.9, self.global_step, \
