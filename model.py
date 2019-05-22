@@ -33,7 +33,8 @@ class Model(object):
         self.global_step = tf.Variable(0, trainable=False, name='global_step')
 
         print("Executing with k: ", k)
-        write('Executing with k: %.2f%%' % k)
+        write('Executing with k: %.2f' % k)
+        self.k = k
 
         # lambda decay
         lamda = tf.maximum(0.7, tf.train.exponential_decay(0.9, self.global_step, \
@@ -255,7 +256,7 @@ class Model(object):
             summary_writer.add_summary(summaries, global_step=global_step)
 
             end_ts = time.time()
-            print("Game %d/%d (Winner: %s) in %d turns (%.2f secs)" % (episode, episodes, players[winner].player, game_step, end_ts-start_ts))
+            print("%.2f - Game %d/%d (Winner: %s) in %d turns (%.2f secs)" % (self.k, episode, episodes, players[winner].player, game_step, end_ts-start_ts))
             """if episode in [9, 99, 999, 9999, 99999]:
                 print("%d games avg time: %.2f secs" % (episode+1, (end_ts - train_start_ts) / (episode+1)))
             """
@@ -266,7 +267,7 @@ class Model(object):
         self.test(episodes=1000)
 
 def write(message):
-    f= open("resultado.txt","w+")
+    f= open("resultado.txt","a+")
     f.write(message)
     f.write("\n")
     f.close() 
