@@ -67,7 +67,7 @@ class Model(object):
 
         # delta = V_next - V
         delta_op = tf.reduce_sum(self.V_next - self.V, name='delta')
-
+        
         # mean squared error of the difference between the next state and the current state
         loss_op = tf.reduce_mean(tf.square(self.V_next - self.V), name='loss')
 
@@ -134,15 +134,13 @@ class Model(object):
                     trace_op = trace.assign((lamda * trace) + grad)
                     tf.summary.histogram(var.name + '/traces', trace)
 
+                # grad with trace = alpha * delta * e
                 #Mihatsch scalar transformation function
                 #if x > 0:
                 #    x = (1 - k) * x;
                 #else:
                 #    x = (1 + k) * x;
-                r = tf.cond(tf.greater(delta_op, 0), lambda: (1 - k) * delta_op, lambda: (1 + k) * delta_op)
-                
-                # grad with trace = alpha * delta * e
-                grad_trace = alpha * r * trace_op
+                grad_trace = alpha * (1 - (tf.sign(delta_op) * k)) * delta_op * trace_op
 
                 # ORIGINAL: grad_trace = alpha * delta_op * trace_op
                 tf.summary.histogram(var.name + '/gradients/trace', grad_trace)
@@ -226,8 +224,8 @@ class Model(object):
             start_ts = time.time()
             if episode != 0 and episode % validation_interval == 0:
                 print('Episode:', episode)
-                write('Episode %d:' % episode)
-                self.test(episodes=1000)
+                write('Episode: %d' % episode)
+                self.test(episodes=100)
             game = Game.new()
             player_num = random.randint(0, 1)
 
@@ -251,7 +249,7 @@ class Model(object):
                 self.train_op,
                 self.global_step,
                 self.summaries_op,
-                self.reset_op
+                self.reset_op,
             ], feed_dict={ self.x: x, self.V_next: np.array([[winner]], dtype='float') })
             summary_writer.add_summary(summaries, global_step=global_step)
 
@@ -263,8 +261,8 @@ class Model(object):
             self.saver.save(self.sess, self.checkpoint_path + 'checkpoint', global_step=global_step)
 
         summary_writer.close()
-
-        self.test(episodes=1000)
+        write('Episode: 1000')
+        self.test(episodes=100)
 
 def write(message):
     f= open("resultado.txt","a+")
