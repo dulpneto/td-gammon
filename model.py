@@ -41,9 +41,9 @@ class Model(object):
             30000, 0.96, staircase=True), name='lambda')
 
         # learning rate decay
-        #alpha = tf.maximum(0.01, tf.train.exponential_decay(0.1, self.global_step, \
-        #    40000, 0.96, staircase=True), name='alpha')
-        alpha = tf.constant(0.67)
+        alpha = tf.maximum(0.01, tf.train.exponential_decay(0.1, self.global_step, \
+            40000, 0.96, staircase=True), name='alpha')
+        #alpha = tf.constant(0.67)
 
         tf.summary.scalar('lambda', lamda)
         tf.summary.scalar('alpha', alpha)
@@ -216,8 +216,8 @@ class Model(object):
 
         #validation_interval = 1000
         #episodes = 5000
-        validation_interval = 100
-        episodes = 1000
+        validation_interval = 500
+        episodes = 5000
 
         train_start_ts = time.time()
         for episode in range(episodes):
@@ -261,7 +261,7 @@ class Model(object):
             self.saver.save(self.sess, self.checkpoint_path + 'checkpoint', global_step=global_step)
 
         summary_writer.close()
-        write('Episode: 1000')
+        write('Episode: 5000')
         self.test(episodes=100)
 
 def write(message):
