@@ -1,0 +1,105 @@
+Executing with k: 0.00
+Episode: 100
+71:29 of 100 games (71.00%)
+Episode: 200
+77:23 of 100 games (77.00%)
+Episode: 300
+76:24 of 100 games (76.00%)
+Episode: 400
+83:17 of 100 games (83.00%)
+Episode: 500
+77:23 of 100 games (77.00%)
+Episode: 600
+85:15 of 100 games (85.00%)
+Episode: 700
+83:17 of 100 games (83.00%)
+Episode: 800
+76:24 of 100 games (76.00%)
+Episode: 900
+81:19 of 100 games (81.00%)
+Episode: 1000
+75:25 of 100 games (75.00%)
+Executing with k: -0.80
+Episode: 100
+77:23 of 100 games (77.00%)
+Episode: 200
+83:17 of 100 games (83.00%)
+Episode: 300
+79:21 of 100 games (79.00%)
+Episode: 400
+79:21 of 100 games (79.00%)
+Episode: 500
+72:28 of 100 games (72.00%)
+Episode: 600
+73:27 of 100 games (73.00%)
+Episode: 700
+65:35 of 100 games (65.00%)
+Episode: 800
+66:34 of 100 games (66.00%)
+Episode: 900
+53:47 of 100 games (53.00%)
+Episode: 1000
+59:41 of 100 games (59.00%)
+Executing with k: -0.50
+Episode: 100
+43:57 of 100 games (43.00%)
+Episode: 200
+23:77 of 100 games (23.00%)
+Episode: 300
+24:76 of 100 games (24.00%)
+Episode: 400
+28:72 of 100 games (28.00%)
+Episode: 500
+21:79 of 100 games (21.00%)
+Episode: 600
+24:76 of 100 games (24.00%)
+Episode: 700
+20:80 of 100 games (20.00%)
+Episode: 800
+32:68 of 100 games (32.00%)
+Episode: 900
+26:74 of 100 games (26.00%)
+Episode: 1000
+30:70 of 100 games (30.00%)
+Executing with k: 0.50
+Episode: 100
+78:22 of 100 games (78.00%)
+Episode: 200
+24:76 of 100 games (24.00%)
+Episode: 300
+82:18 of 100 games (82.00%)
+Episode: 400
+84:16 of 100 games (84.00%)
+Episode: 500
+84:16 of 100 games (84.00%)
+Episode: 600
+91:9 of 100 games (91.00%)
+Episode: 700
+87:13 of 100 games (87.00%)
+Episode: 800
+84:16 of 100 games (84.00%)
+Episode: 900
+84:16 of 100 games (84.00%)
+Episode: 1000
+74:26 of 100 games (74.00%)
+Executing with k: 0.80
+Episode: 100
+85:15 of 100 games (85.00%)
+Episode: 200
+86:14 of 100 games (86.00%)
+Episode: 300
+76:24 of 100 games (76.00%)
+Episode: 400
+81:19 of 100 games (81.00%)
+Episode: 500
+73:27 of 100 games (73.00%)
+Episode: 600
+80:20 of 100 games (80.00%)
+Episode: 700
+58:42 of 100 games (58.00%)
+Episode: 800
+71:29 of 100 games (71.00%)
+Episode: 900
+65:35 of 100 games (65.00%)
+Episode: 1000
+71:29 of 100 games (71.00%)
